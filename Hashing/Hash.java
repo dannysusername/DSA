@@ -1,8 +1,13 @@
+package Hashing;
 import java.util.ArrayList;
 
-//Program for hashing with chaining
-//Auxiliary Space O(1)
-
+/*
+Program for hashing using seperate chaining using ArrayList
+-Seperate chaining is when each index contains a list to store colliding elements 
+Auxiliary Space O(1)
+Load factor is the average amount of elements per list or per index. Since Hash function calculation is O(1) and traversing the ArrayList is O(n/m), then
+most operations are O(1 + n/m). Load factor is recommended to be lower than one, for time and space effeciency of traversing and having wasted space.
+ */
 public class Hash{
 
     int bucket;
