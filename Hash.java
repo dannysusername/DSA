@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 //Program for hashing with chaining
+//Auxiliary Space O(1)
 
 public class Hash{
 
@@ -12,7 +13,7 @@ public class Hash{
         this.table = new ArrayList[bucket];
 
         for(int i = 0; i < bucket; i++){
-            table[i] = new ArrayList<>();
+            table[i] = new ArrayList<>(); 
         }
     }
 
@@ -23,21 +24,24 @@ public class Hash{
     public void insertItem(int key){
         int index = hashFunction(key);
         table[index].add(key);
+        //O(1 + n/m)
     }
 
     public void deleteItem(int key){
 
-        int index = hashFunction(key);
+        int index = hashFunction(key); //O(1)
 
         if(!table[index].contains(key)){
-            return;
+            return; //O(1 + n/m)
         } 
 
-        table[index].remove(Integer.valueOf(key));
+        table[index].remove(Integer.valueOf(key)); //O(1 + n/m)
 
     }
 
     public void displayHash(){
+
+        //O(n + n/m)
 
         for(int i = 0; i < table.length; i++){
             System.out.print (i + ". ");
