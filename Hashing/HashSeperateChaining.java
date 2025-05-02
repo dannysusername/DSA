@@ -8,12 +8,12 @@ Auxiliary Space O(1)
 Load factor is the average amount of elements per list or per index. Since Hash function calculation is O(1) and traversing the ArrayList is O(n/m), then
 most operations are O(1 + n/m). Load factor is recommended to be lower than one, for time and space effeciency of traversing and having wasted space.
  */
-public class HashSimpleChaining{
+public class HashSeperateChaining{
 
     int bucket;
-    ArrayList<Integer>[] table;
+    ArrayList<Integer>[] table; 
 
-    public HashSimpleChaining(int bucket){
+    public HashSeperateChaining(int bucket){
         this.bucket = bucket;
         this.table = new ArrayList[bucket];
 
@@ -61,7 +61,7 @@ public class HashSimpleChaining{
 
     public static void main(String[] args){
         int[] array = { 15, 11, 27, 8, 12 };
-        HashSimpleChaining h = new HashSimpleChaining(7);
+        HashSeperateChaining h = new HashSeperateChaining(7);
         for(int i = 0; i < array.length; i++){
             h.insertItem(array[i]);
         }

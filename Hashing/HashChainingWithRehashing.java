@@ -3,14 +3,14 @@ package Hashing;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class HashSimpleChainingWithRehashing {
+public class HashChainingWithRehashing {
 
     int bucket;
     int numOfElements;
 
     ArrayList<LinkedList<Integer>> table;
 
-    public HashSimpleChainingWithRehashing(int b){
+    public HashChainingWithRehashing(int b){
         this.bucket = b;
         this.numOfElements = 0;
         table = new ArrayList<>(bucket);
@@ -115,7 +115,7 @@ public class HashSimpleChainingWithRehashing {
         a.add(81);
         a.add(1);
 
-        HashSimpleChainingWithRehashing table1 = new HashSimpleChainingWithRehashing(20);
+        HashChainingWithRehashing table1 = new HashChainingWithRehashing(20);
         
         for(int i : a){
             table1.insert(i);
