@@ -1,6 +1,9 @@
 package Hashing;
 
 public class HashTableOpenAddressing {
+    //Linear probing
+
+
     int tableSize;
     int numOfElements;
     HashNode[] table;
@@ -92,7 +95,6 @@ public class HashTableOpenAddressing {
             index += 1 % tableSize;
 
         }
-
         if(table[index] == null || table[index].getKey() == -1){
             numOfElements++;
         } else if (table[index].getKey() == key){
@@ -100,7 +102,6 @@ public class HashTableOpenAddressing {
         }
 
         table[index] = temp;
-
 
     }
 
