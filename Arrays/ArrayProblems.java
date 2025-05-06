@@ -402,11 +402,78 @@ public class ArrayProblems{
 
     public static void printDistinctElementsSort(int[] array){
 
-       
+        int n = array.length - 1;
+        quickSort(array, 0, n);
+
+        for(int val : array){
+            System.out.println("val: " + val);
+
+        }
+
+        int prev = Integer.MIN_VALUE;
+
+        for(int i = 0; i < array.length; i++){
+
+            if(array[i] != prev) {
+                System.out.println(array[i]);
+                prev = array[i];
+            } else {
+                prev = array[i];
+            }
+
+        }
 
     }
 
-    public void printDistinctElementsHashSet(){
+    public ArrayList<Integer> printDistinctElementsHashSet(int[] array){
+
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int x : array){
+            set.add(x);
+
+        }
+
+        return new ArrayList<>(set);   
+
+    }
+
+    public static boolean duplicateKDistanceArray(int[] array, int k){
+        for(int i = 0; i < array.length; i++){
+
+            for(int j = i; j <= k && i + j <= k; j++){
+
+                if(array[i] == array[j]){
+                    return true;
+                }
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+    public static boolean checkDuplicates(int[] array, int k){
+
+        HashSet<Integer> Set = new HashSet<>();
+
+        for(int i = 0; i < array.length; i++){
+
+            if(Set.contains(array[i])){
+                return true;
+            }
+
+            Set.add(array[i]);
+
+            if(i >= k){
+                Set.remove(array[i - k]);
+            }
+
+        }
+
+        return false;
 
     }
 
@@ -451,15 +518,9 @@ public class ArrayProblems{
 
     public static void main(String[] args) {
 
-        int[] array = {2, 2, 7, 6, 8, 6, 10};
-        int n = array.length;
-       
-        quickSort(array, 0, n - 1);
-
-        for(int val : array){
-            System.out.println("val: " + val);
-            
-        }
+        int[] array = {2, 1, 2, 3, 7};
+        
+        System.out.println(duplicateKDistanceArray(array, 2) ? "Yes" : "No");
 
     }
 
