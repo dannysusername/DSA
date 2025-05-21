@@ -955,66 +955,181 @@ public class ArrayProblems{
         array[j] = temp;
 
     }
-
     
-    public static void mergeSort(int[] arr) {
-        if (arr == null || arr.length <= 1) return;
-        int[] temp = new int[arr.length];
-        mergeSortHelper(arr, 0, arr.length - 1, temp);
-    }
+    public static void waveForm(int[] array) {
 
-    private static void mergeSortHelper(int[] arr, int left, int right, int[] temp) {
-        if (left >= right) return;
-        
-        int mid = left + (right - left) / 2;
-        mergeSortHelper(arr, left, mid, temp);
-        mergeSortHelper(arr, mid + 1, right, temp);
-        merge(arr, left, mid, right, temp);
-    }
+        quickSort(array, 0, array.length - 1);
 
-    private static void merge(int[] arr, int left, int mid, int right, int[] temp) {
-        // Copy to temp array
-        for (int i = left; i <= right; i++) {
-            temp[i] = arr[i];
+        int i = 0; 
+        int j = i + 1;
+
+        while(j < array.length) {   
+            swap(array, i, j);
+            i += 2;
+            j += 2;
         }
 
-        int i = left;      // Left subarray index
-        int j = mid + 1;   // Right subarray index
-        int k = left;      // Result array index
+    } 
 
-        while (i <= mid && j <= right) {
-            if (temp[i] <= temp[j]) {
-                arr[k++] = temp[i++];
+    public static void waveForm2(int[] array) {
+
+        for(int i = 2; i < array.length - 1; i+=2) {
+
+            if(i > 0 && array[i] < array[i - 1]){
+                swap(array, i, i - 1);
+
+                if (i < array.length-1 && array[i] < array[i + 1]) {
+                    swap(array, i, i + 1);
+                }
+
+            }   
+
+        }
+
+    }
+
+    public static int maximumSubArraySum(int[] arr){
+
+        //Kadens Algorithm
+
+        int maxSum = arr[0];
+        int maxSumEnding = arr[0]; 
+
+
+       for(int i = 1; i < arr.length; i++){
+
+            //i < 7 (1-6)
+
+            //[2, 3, -8, 7, -1, 2, 3]
+            //MaxEnding is the max sum of the subaarray that ends in element i. So to find maxEnding ask your self... does the previous
+            //MaxEnding plus arr[i] > arr[i], if yes add arr[i] to maxEnding if not make maxSum and maxEnding = arr[i]
+            //For i = 1 maxSumEnding = 2 and arr[i] = 3 so maxSumEnding + arr[i] = 5 which is greater than 3. maxSumEnding = 5, maxSum = 5;
+            //For i = 2 maxSumEnding = 5 and arr[i] = -8 so maxSumEnding + arr[i] = -3 which is greater than -8. maxSumEnding = -3, maxSum = 5;
+            //For i = 3 maxSumEnding = -3 and arr[i] = 7 so maxSumEnding + arr[i] = 4 which is NOT greater than 7. maxSumEnding = 7, maxSum = 7;
+            //For i = 4 maxSumEnding = 7 and arr[i] = -1 so maxSumEnding + arr[i] = 6 which is greater than -1. maxSumEnding = 6, maxSum = 7;
+            //For i = 5 maxSumEnding = 6 and arr[i] = 2 so maxSumEnding + arr[i] = 8 which is greater than 2. maxSumEnding = 8, maxSum = 8;
+            //For i = 6 maxSumEnding = 8 and arr[i] = 3 so maxSumEnding + arr[i] = 11 which is greater than 3. maxSumEnding = 11, maxSum = 11;
+
+            //Max Sum = 11
+
+            //Max of maxSumEnding + arr[i] and arr[i] - "What is larger previous max sum ending at arr[i] plus arr[i] or the current element arr[i]"
+            if(maxSumEnding + arr[i] > arr[i]){
+                maxSumEnding += arr[i];
+
             } else {
-                arr[k++] = temp[j++];
+                maxSumEnding = arr[i];
+                maxSum = arr[i];
+
             }
+
+            //Find max of maxSumEnding, MaxSum
+            if(maxSumEnding > maxSum){
+                maxSum = maxSumEnding;
+
+            } 
+
+       }
+
+       return maxSum;
+
+    }
+
+    public static int KadensAlgorithm(int[] arr) {
+
+        int maxSumEnding = arr[0];
+        int maxSum = arr[0];
+
+        for(int i = 1; i < arr.length; i++){
+
+            maxSumEnding = Math.max(maxSumEnding + arr[i], arr[i]);
+
+            maxSum = Math.max(maxSum, maxSumEnding);
+
         }
 
-        // Copy remaining elements from left subarray
-        while (i <= mid) {
-            arr[k++] = temp[i++];
-        }
+        return maxSum;
+
     }
-    
-        // Example usage
+
+    public static int maximumSubArraySumWithK(int[] arr, int k) {
+
+        int maxSum = arr[0]; //maxSum found in subArray in arr 
+        int maxEnding = arr[0]; //MaxSum in the subarray ending in current element; ex. i = 1 [-1, 10, 20] maxEnding = 10.
+
+        for(int i = 1; i < (arr.length * k); i++){
+
+            int f = (i % arr.length);
+
+            //Find maxEnding 
+            if(maxEnding + arr[f] > arr[f]){
+                maxEnding = maxEnding + arr[f];
+            } else {
+                maxEnding = arr[f];
+            }
+
+            //Find maxSum
+            if(maxEnding > maxSum) {
+                maxSum = maxEnding;
+            }
+
+        }
+
+        return maxSum;
+
+    }
+
+    public static int maximumProductSubArray(int[] arr){
+
+        int currMin = arr[0];
+        int currMax = arr[0];
+        int maxProd = arr[0];
+
+        //-2, 6, -3, -10, 0, 2
+
+        for(int i = 1; i < arr.length; i++){
+
+           int temp = max(arr[i], currMin * arr[i], currMax * arr[i]);
+           currMin = min(arr[i], currMin * arr[i], currMax * arr[i]);
+
+           currMax = temp;
+
+           maxProd = Math.max(maxProd, currMax);
+
+        }
+
+        return maxProd;
+
+    }
+
+    public static int min(int a, int b, int c){
+        return Math.min(a, Math.min(b, c));
+
+    }
+
+    public static int max(int a, int b, int c){
+        return Math.max(a, Math.max(b, c));
+
+    }
+
 
     public static void main(String[] args) {
 
-        int arr[] = {12, 11, -13, -5, 6, -7, 5, -3, -6};
-        int n = arr.length;
+            int[] arr = {-2, 6, -3, -10, 0, 2};
+           
+            System.out.println(maximumProductSubArray(arr));
 
-        mergeSort(arr);
-
-        for (int ele: arr) {
-        	System.out.print(ele + " ");
-        }
-        
 
     }
 
+}
+
+
+
+
+
     
 
-}
+
 
 
     
