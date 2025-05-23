@@ -142,6 +142,13 @@ public class MergeSort {
         // reverse arr[i..j]
         reverse(arr, i, j);
     }
+
+    public static void main(String[] args){
+
+        int[] arr = {10, 1, -5, 23, 100, -15, -12, 30};
+        mergeSort(arr);
+
+    }
    
 
 }

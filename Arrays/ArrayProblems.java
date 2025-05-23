@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.lang.reflect.Array;
 import java.util.*;
 
+//good sites: https://roadmap.sh/computer-science
+
 public class ArrayProblems{
 
     public static int getSecondLargest(int[] arr){
@@ -1111,13 +1113,232 @@ public class ArrayProblems{
 
     }
 
+    public static int maxProductSubArray2(int[] arr) {
+
+        int n = arr.length;
+        int leftToRight = 1;
+        int rightToLeft = 1;
+        int maxProd = Integer.MIN_VALUE;
+
+        for(int i = 0; i < arr.length; i++) {
+
+            leftToRight *= arr[i];
+            rightToLeft *= arr[n - i - 1];
+
+            if(leftToRight == 0){
+                leftToRight = 1;
+            }
+
+            if(rightToLeft == 0){
+                rightToLeft = 1;
+            }
+
+            maxProd = Math.max(maxProd, Math.max(rightToLeft, leftToRight));
+
+        }
+
+        return maxProd;
+
+    }
+
+    public static void prefixSumArray(int[] arr, int[] prefixArray) {
+        //O(N) time, O(N) space
+
+       
+        int sum = 0;
+
+        for(int i = 0; i < arr.length; i++){
+            sum += arr[i];
+            prefixArray[i] += sum;
+            
+        }
+
+    }
+
+    public static int rangeSumQueries(int[] arr, int k, int j) {
+
+        //O(N) time, O(1) space
+
+        int sum = 0;
+
+
+        for(int i = k; i <= j; i++) {
+            sum += arr[i];
+
+        }
+
+        return sum;
+
+    }
+
+    public static int effRangeSum(int[] pre, int k, int j){
+
+        //This method allows O(1) for each query time and O(N) overall cause of prefixSum which only executes once. O(N) space
+
+        if(k == 0) {
+            return pre[j];
+        } else {
+            return pre[j] - pre[k - 1];
+        }
+
+    }
+
+    public static void suffixSumArray(int[] arr, int[] suff) {
+
+        int sum = 0;
+
+        for(int i = arr.length - 1; i >= 0; i--) {
+
+            sum += arr[i];
+            suff[i] += sum; 
+
+        }
+
+    }
+
+    public static int findEquilibriumIneff(int[] arr) {
+        //O(n^2)
+
+        // {-7, 1, 5, 2, -4, 3, 0}
+
+        for(int i = 0; i < arr.length; i++) {
+
+            int leftSum = 0;
+
+            for(int j = 0; j < i; j++){
+                leftSum += arr[j];
+            }
+
+            int rightSum = 0;
+
+            for(int k = i + 1; k < arr.length; k++) {
+                rightSum += arr[k];
+            }
+
+            if(leftSum == rightSum) {
+                return i;
+            }
+
+        }
+
+        return -1;
+
+    }
+
+    
+    public static int findEquilibrium(int[] arr){
+        //O(N) time and O(N) space
+
+        int n = arr.length;
+
+        int[] prefixArr = new int[n];
+        int[] suffixArr = new int[n];
+
+        suffixSumArray(arr, suffixArr);
+        prefixSumArray(arr, prefixArr);
+
+        for(int i = 0; i < n; i++) {
+
+            if(prefixArr[i] == suffixArr[i]){
+                return i;
+            }
+
+        }
+
+        return -1;
+
+    }
+
+    public static int findEquilibrium2(int[] arr){
+
+        //Loop that compares PrefixArr(pivot - 1) and SuffixArr(pivot + 1)
+        //pivot == i in loop
+        int n = arr.length;
+
+        int totalSum = totalSum(arr);
+
+        for(int i = 0; i < n - 1; i++) {
+
+            int pre = prefixSum(i, arr);
+            int suf = suffixSum(i, arr, totalSum);
+
+            if(pre == suf){
+                return i;
+            }
+
+
+        }
+        return -1;
+
+    }
+
+    public static int findEquilibrium3(int[] arr) {
+
+        int totalSum = 0;
+        int prefixSum = 0;
+
+        for(int x : arr){
+            totalSum += x;
+
+        }
+
+        for(int pivot = 0; pivot < arr.length; pivot++) {
+
+            int suffSum = totalSum - prefixSum - arr[pivot];
+            if (prefixSum == suffSum) {
+                return pivot;
+            }
+            prefixSum += arr[pivot];
+
+        }
+
+        return -1;
+
+    }
+
+    public static int prefixSum(int p, int[] array) {
+
+        int sum = 0;
+
+        for(int i = 0; i <= p; i++){
+            sum+= array[i];
+        }
+
+        return sum;
+
+    }
+
+    public static int totalSum(int[] arr){
+
+        int total = 0;
+
+        for(int i = 0; i < arr.length; i++){
+            total += arr[i];
+        }
+
+        return total;
+
+    }
+
+    public static int suffixSum(int s, int[] arr, int total) {
+
+        int sum = total;
+
+        for(int i = 0; i < s; i++){
+            sum-= arr[i];
+        }
+
+        return sum;
+
+    }
+
+    
 
     public static void main(String[] args) {
 
-            int[] arr = {-2, 6, -3, -10, 0, 2};
-           
-            System.out.println(maximumProductSubArray(arr));
+       int[] arr = {1, 7, 3, 6, 5, 6};
 
+        System.out.println(findEquilibrium3(arr));
 
     }
 
