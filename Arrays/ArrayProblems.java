@@ -1332,14 +1332,663 @@ public class ArrayProblems{
 
     }
 
+    public static boolean twoSum(int[] arr, int target){
+//O(n^2)
+        for(int i = 0; i < arr.length; i++){
+
+            for(int j = i; j < arr.length; j++){
+
+                if(arr[i] + arr[j] == target) {
+                    return true;
+                }
+
+            }
+
+
+        }
+
+        return false;
+
+    }
+
+ 
+    public static boolean twoSum2(int[] arr, int target) {
+        //TwoSum variation is meant to find a pair of numbers in an array that equal a target value provided
+        //at input. First the array is sorted O(nlogn), then a for loop is made that goes through
+        //each value in the sorted array. This finds each values possible complement values. 
+        //Binary search is used to find the complement values. Binary search runes in O(logN). In total
+        //O(1) space for this.
+
+        quickSort2(arr, 0, arr.length - 1);
+
+        for(int i = 0; i < arr.length; i++) {
+
+            int complement = target - arr[i];
+
+            if (binarySearchTwoSum(arr, complement, i + 1, arr.length - 1)) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+        
+    }
     
 
+    public static void quickSort2(int[] array, int low, int high) {
+
+        if(low < high) {
+            int partition = partition(array, low, high);
+
+            quickSort(array, low, partition - 1);
+            quickSort(array, partition + 1, high);
+
+        }
+
+    }
+
+    public static int partition2(int[] array, int low, int high) {
+
+        int pivot = array[high];
+        int i = low - 1;
+
+        for(int j = low; j <= high - 1; j++) {
+
+            if(array[j] < pivot) {
+                i++;
+                swap(array, i, j);
+
+            }
+
+        }
+
+        int position = i + 1;
+        swap(array, position, high);
+
+        return position;
+
+    }
+
+    public static void swap2(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+
+    }
+
+    public static boolean binarySearchTwoSum(int[] arr, int target, int left, int right) {
+
+        while(left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            if(arr[mid] == target) {
+                return true;
+            } else if (target < arr[mid]){
+                right = mid - 1;
+
+            } else {
+                left = mid + 1;
+
+            }
+
+        }
+
+        return false;
+
+    }  
+
+    public static boolean twoSum3(int[] arr, int target) {
+
+        //O(nlogn) in total. Quicksort executes in O(nlogn) time and TwoPointer
+
+        quickSort(arr, 0, arr.length - 1);
+
+        if (TwoPointer2Sum(arr, 0, arr.length - 1, target)) {
+            return true;
+        }
+
+        return false;
+
+
+    }
+
+    public static boolean TwoPointer2Sum(int arr[], int left, int right, int target) {
+
+        while(left < right) {
+
+            int LRsum = arr[left] + arr[right];
+
+            if(LRsum == target) {
+                return true;
+
+            } else if(target < (arr[left] + arr[right])) {
+                left++;
+
+            } else {
+                right++;
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+    public static boolean TwoSumHashSet(int [] arr, int target) {
+
+        HashSet<Integer> array = new HashSet<>();
+
+        for(int i = 0; i < arr.length; i++){
+
+            int complement = target - arr[i];
+            array.add(complement);
+
+            if(array.contains(complement)) {
+                return true;
+            }
+
+            array.add(arr[i]);
+
+        }
+        
+        return false;
+
+    }
+
+    public static int twoSum0(int[] arr) {
+
+        int minAbs = Integer.MAX_VALUE;
+        int output = Integer.MAX_VALUE;
+
+        for(int i = 0; i < arr.length - 1; i++) {
+
+            for(int j = i + 1; j < arr.length; j++) {
+
+                int currTotal = arr[i] + arr[j];
+                int currAbs = Math.abs(currTotal);
+
+                if(currAbs < minAbs) {
+                    minAbs = currAbs;
+                    output = currTotal;
+                } else if (currAbs == minAbs){
+                    if(currTotal > output) {
+                        minAbs = currAbs;
+                        output = currTotal;
+                    }
+                }
+
+            }
+
+        }
+
+        return output;
+
+    } 
+
+    public static int TwoSum0num2 (int[] arr) {
+
+        //what is actually happening here? well there is a for loop that goes thropugh each element in the 
+        //sorted array and at each element a binary search is executed which goes to the middle number, the middle number 
+        //and the current iteration of the for loop and mid absolute values are added then compared to result abs value
+        //the result is updated if necessary, if the mid and x are less than zero then we go to the right if not we go left
+        
+
+        int n = arr.length;
+
+        int result = Integer.MAX_VALUE;
+
+
+        quickSort(arr, 0, arr.length - 1);
+
+        for(int i = 0; i < arr.length; i++) {
+
+            int x = arr[i];
+
+            int left = i + 1; int right = n - 1;
+            
+            while(left <= right){
+
+                int mid = (left + right)/2;
+                int curr = arr[mid] + x;
+                
+                if(curr == 0) {
+                    return 0;
+                }
+
+                if(Math.abs(curr) < Math.abs(result)) {
+                    result = curr;
+                } else if (Math.abs(curr) == Math.abs(result)){
+                    result = Math.max(result, mid);
+                }
+
+                if (curr < 0) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }  
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+    public static int twoSum2pointer0 (int [] arr) {
+
+        //sort array first, result variable to store max sum of pair closest to zero, while loop(left < right) with pointers at each
+        //ends. compare abs value of both pointers with abs of result and update if necessary. if result is negative increment left, 
+        //else increment right 
+
+        int n = arr.length;
+
+        quickSort(arr, 0, 0);
+
+        int closestSum = Integer.MAX_VALUE;
+
+        int left = 0; int right = n - 1;
+
+        while(left < right) {
+
+            int curr = arr[left] + arr[right];
+
+            if(curr == 0){
+                return 0;
+            }
+
+            if(Math.abs(curr) < Math.abs(closestSum)) {
+                closestSum = curr;
+
+            }
+
+            if(curr < 0) {
+                left++;
+            } else {
+                right--;
+            }
+
+        }
+
+        return closestSum;
+
+    }
+
+    public static int chocolateDistProb(int[] arr, int m) {
+
+        //find the minimum sum of max and min in a subarray of size m, or pick the m sequence of packets that has 
+        //the minimum sum of max and min
+        //first sort, then 
+
+        //1, 3, 4, 5, 7
+        int n = arr.length;
+
+        quickSort(arr, 0, n - 1);
+
+        int minDiff = Integer.MAX_VALUE;
+
+        int left = 0; int right = m - 1;
+
+        while(right < n) {
+
+            int difference = arr[right] - arr[left];
+
+            if(difference < minDiff) {
+                minDiff = difference;
+            }
+
+            left++;
+            right++;
+
+        }
+
+        return minDiff;
+
+    }
+
+    public static void unionTwoArrays(int[] a, int[] b) {
+
+        ArrayList<Integer> result = new ArrayList<>();
+
+        for(int x: a) {
+
+            if(!result.contains(x)){
+                result.add(x);
+            }
+
+        }
+
+        for(int x: b) {
+
+            if(!result.contains(x)){
+                result.add(x);
+            }
+
+        }
+        
+    }
+
+    public static ArrayList<Integer> unionTwoArraysHashSet(int[] a, int[] b) {
+
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int x : a) {
+            set.add(x);
+        }
+
+        for(int x : b) {
+            set.add(x);
+        }
+
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        for(int x : set) {
+            res.add(x);
+        }
+
+        return res;
+
+    }
+
+    public static HashSet<Integer> intersection(int[] a, int[] b) {
+
+        //HashSet does not allow duplicates. I created an arraylist added the first array (a) to it, then created a hashset
+        //and iterated through array b to check for elements. if element is found then add it to hashset.
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for(int i = 0; i < a.length; i++) {
+            list.add(a[i]);
+
+        }
+
+        HashSet <Integer> set = new HashSet<>();
+
+        for(int i = 0; i < b.length; i++) {
+            if(list.contains(b[i])) {
+                set.add(b[i]);
+            }
+
+        }
+
+        return set;
+
+    }
+
+    public static ArrayList<Integer> unionSorted(int[] a, int[] b) {
+        //given two input arrays output the union of these two arrays in sorted order. Union of two arrays is 
+        //having all distinct elements in both arrays, this is O(n+m) on average. Since we are using an ArrayList
+        //it may resize infrequently but its add operation runs on amortized constant time. O(n + m) space 
+
+        int aPointer = 0;
+        int bPointer = 0;
+
+        ArrayList<Integer> save = new ArrayList<>(); //ArrayList maintains insertion order
+        HashSet<Integer> result = new HashSet<>(); //HashSet does not allow duplicate elements
+
+        while(aPointer < a.length && bPointer < b.length) { // O(n + m)
+
+            if(a[aPointer] <= b[bPointer]){
+                //If a pointer is less than b pointer, then check if a is not in hashset add it to arraylist then to hashset. always increment aPointer
+                if(!result.contains(a[aPointer])) { //O(1)
+                    save.add(a[aPointer]); //Amortized O(1)
+                    result.add(a[aPointer]); //O(1)
+                }
+
+                aPointer++;
+
+            } else {//(if b > a)
+                //if hashset doesnt contain bpointer add to arraylist and hashset. always increment bPointer
+                if(!result.contains(b[bPointer])) {
+                    save.add(b[bPointer]);     
+                    result.add(b[bPointer]);     
+                }      
+                
+                bPointer++;
+
+            }
+
+        }
+
+        while(aPointer < a.length){
+
+            if(!result.contains(a[aPointer])) {
+
+                save.add(a[aPointer]);
+                result.add(a[aPointer]);
+            }
+
+            aPointer++;
+
+        }
+        
+        while(bPointer < b.length){
+
+            if(!result.contains(b[bPointer])) {
+
+                save.add(b[bPointer]);
+                result.add(b[bPointer]);
+            }
+
+            bPointer++;
+
+        }
+
+        return save;
+
+    }
+
+    public static ArrayList<Integer> unionSorted2(int[] a, int[] b) {
+        //this implementation does not use a hashset just an arraylist
+
+        //while loop while pointesr are less than lengths, add the smallest number first increment, if equal add one but incremement both, save previous element, 
+        // if same element increment both
+
+        ArrayList<Integer> result = new ArrayList<>();
+
+        int ap = 0;
+        int bp = 0;
+        int prev = Integer.MIN_VALUE;
+
+        while(ap < a.length && bp < b.length) {
+
+            //if a == b then add one and incremement both but 
+            if(a[ap] == b[bp]) {
+                //if the prev element equals a then increment both since they equal eachother and the previous was the same number
+                if (prev == a[ap]) {
+                    ap++;
+                    bp++;
+                    continue;
+                }
+
+                //if not then add one of them and incremement both
+                prev = a[ap];
+                result.add(a[ap]);               
+                ap++;
+                bp++;
+
+            } else if(a[ap] < b[bp]){ // else if a < b then set prev and add
+
+                if(prev == a[ap]) { // if prev equals a then skip, increment
+                    ap++;
+                    continue;
+                }
+
+                prev = a[ap];
+                result.add(a[ap++]);
+
+            } else { // else - if b < a then set prev and add
+
+                if (prev == b[bp]) { //if prev equals b then increment and skip
+                    bp++;
+                    continue;
+                }
+
+                prev = b[bp];
+                result.add(b[bp++]);
+
+            }
+
+        }
+
+        while(ap < a.length) {
+
+
+            if(prev == a[ap]) {
+                ap++;
+                continue;
+            } 
+
+            result.add(a[ap]);
+
+        }
+
+        while(bp < b.length) {
+
+            if(prev == b[bp]) {
+                bp++;
+                continue;
+            } 
+
+            result.add(b[bp++]);
+
+        }
+
+        return result;
+
+    }
+
+    public static ArrayList<Integer> unionSortedTreeSet(int[] a, int[] b) {
+        //O((n + m) * log(n + m)) each add,remove,contains in TreeSet is O(log n) because uses RBT or selfing balancing BST
+
+        Set<Integer> unifiedSet = new TreeSet<>();
+        /*
+        Tree Set saves elements in sorted order(natural ordering) and does not allow duplicates
+        "Natural ordering" means numerical order for integers, lexicographical order for strings.
+        */
+        for(int x : a) {
+            unifiedSet.add(x);
+        }
+
+        for(int x : b) {
+            unifiedSet.add(x);
+        }
+
+        ArrayList<Integer> res = new ArrayList<>(unifiedSet);
+        //ArrayList class has a contructor that accepts a collection, TreeSet implements Collection interface via Set
+
+        return res;
+    }
+
+    /* 
+        Set(interface)
+        The signature property of a Set DS is that it does not allow duplicate elements.
+        There are many ways to implement a set but the most common ways are 
+        - Hash-Based Set where the set is represented as a hash table where each element in the set is stored in a bucket 
+        based on its hashcode. No gauranteed order, O(1) average case O(n) space for HashTable
+
+        - Tree-Based Set where the set is represented as a binary search tree where each node represents an element in the set.
+        sorted order O(log n) O(n) space for nodes
+
+        Ordered vs UnorderedSets
+
+        Unordered sets does not maintain order of its elements. Ordered sets do maintain order(sorted or insertion) of its elements. 
+
+        US
+        -HashSet
+
+        OS
+        -LinkedHashSet(Insertion Order)
+        -TreeSet(Sorted by using RBT)
+
+    */
+
+    /* 
+        Intersection of two sorted arrays - given two arrays a and b return the intersection of both
+        1) triple nested for loop
+        2) double loop
+        3) TreeSet or HashSet - add array a to TreeSet(sorted, no duplicates) then traverse array b, if element is in TreeSet then add to new arraylist OR 
+        just remove from tree set. 
+        
+
+    */
+
+    public static HashSet<Integer> intersectionSortedArrays(int[] a, int [] b) {
+
+        //O(n + m) time complexity, O(n) space
+
+        HashSet<Integer> res = new HashSet<>();
+
+        for(int i = 0; i < a.length; i++) {
+
+            res.add(a[i]);
+
+        }
+
+        for(int i = 0; i < b.length; i++) {
+
+            if(res.contains(b[i])){
+
+            } else {
+                res.remove(b[i]);
+            }
+
+        }
+
+        return res;
+
+    }
+
+    public static ArrayList<Integer> intersectionSortedArrays2(int[] a, int[] b) {
+
+        //Intersection - common values of two things. ex. a = [1, 1, 2, 2, 4], b = [2, 2, 4, 4]
+        //result = [2, 4], O(n + m) time, O(n + m space)
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        int ap = 0;
+        int bp = 0;
+        
+        int prev = Integer.MIN_VALUE;
+
+        while(ap < a.length && bp < b.length) {
+
+            if(a[ap] == b[bp]) {    
+
+                if(prev != a[ap]){
+                    res.add(a[ap]);
+                    prev = a[ap];
+
+                }
+
+                ap++;
+                bp++;
+                
+
+            } else if(a[ap] < b[bp]) {
+                ap++;
+
+            } else {
+                bp++;
+
+            }
+
+        }
+
+        return res;
+
+    }
+
     public static void main(String[] args) {
+        int[] a = {3, 5, 10, 10, 10, 15, 15, 20};
+        int[] b = {5, 10, 10, 15, 30};
 
-       int[] arr = {1, 7, 3, 6, 5, 6};
-
-        System.out.println(findEquilibrium3(arr));
-
+        System.out.println(intersectionSortedArrays2(a, b));
+        
     }
 
 }
