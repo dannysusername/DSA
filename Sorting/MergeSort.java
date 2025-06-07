@@ -46,14 +46,11 @@ public class MergeSort {
         }
 
         while(i <= mid){
-
             array[k++] = temp[i++];
 
         }
 
     }
-
-
 
     //these functions moves negative values to the left and positive ones to the right but keep the values
     //in the same relative position they were in originally. O(n) extra space
