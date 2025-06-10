@@ -655,7 +655,7 @@ It is used for problems like TwoSum, merging sorted arrays
                 j++;
 
             }
-            j = 0;
+            j = arr.length/2;
             i++;
 
         }
@@ -664,11 +664,128 @@ It is used for problems like TwoSum, merging sorted arrays
 
     }
 
+    public static int dominantPairs2(int[] arr) {
+
+        int n = arr.length;
+
+        Arrays.sort(arr, 0, n/2);
+        Arrays.sort(arr, n/2, n);
+
+        // [10, 8, 2, 1, 1, 2]
+        // [2, 8, 10, 1, 1, 2]
+        int right = n/2;
+
+        int count = 0;
+
+        for(int left = 0; left < n/2; left++) {
+            // Move right pointer while dominance condition holds
+            while (right < n && arr[left] >= 5 * arr[right]) {
+                right++;
+            }
+            
+            // Count dominant pairs
+            count += (right - n / 2);
+        }
+        
+        return count;
+
+    }
+
+    public static boolean sentPalindrome(String sentence) {
+
+        //1 remove non anc with .replaceAll()"[^a-zA-Z0-9]", "") and 2 covert from uppercase to lowercase with .toLowercase
+        String newSentence = sentence.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        //3 check if newSentence reads the same backwards as forwards.
+        int left = 0;
+        int right = newSentence.length() - 1;
+
+        while(left <= right) {
+
+            if(newSentence.charAt(left) != newSentence.charAt(right)){
+                return false;
+            } else {
+                left++;
+                right--;
+            }
+
+        }
+
+        return true;
+        
+
+    }
+
+    public static boolean sentPalindrome2(String sentence) {
+
+        int left = 0; 
+        int right = sentence.length() - 1;
+
+        while(left <= right) {
+
+            char left1 = sentence.charAt(left);
+            char right1 = sentence.charAt(right);
+
+            if(!Character.isLetterOrDigit(left1)){
+                left++;
+            } else if(!Character.isLetterOrDigit(right1)){
+                right--;
+            } else if(Character.toLowerCase(left1) == Character.toLowerCase(right1)){
+                left++;
+                right--;
+                
+            } else {
+                return false;
+
+            }   
+
+        }
+
+        return true;
+
+    }
+
+    public static ArrayList<Integer> intersectionTwoArray(int[] a, int[] b) {
+
+        //O(n log n)
+        int n = a.length;
+        int m = b.length;
+
+        Arrays.sort(a);
+        Arrays.sort(b);
+
+        ArrayList<Integer> result = new ArrayList<>();
+
+        int left = 0;
+        int right = 0;
+        
+
+        while(left < n && right < m) {
+
+            if(a[left] == b[right]) {
+                result.add(a[left]);
+                left++;
+                right++;
+            } else if (a[left] > b[right]) {
+                right++;
+
+            } else {
+                left++;
+            }
+
+        }
+
+        return result;
+
+    }
+
+    
+
     public static void main(String[] args) {
-
-        int[] arr = {10, 8, 2, 1, 1, 2};
-
-        System.out.println(dominantPairs(arr));
+        int a[] = { 4, 5, 2, 3 };
+        int b[] = { 1, 7 };
+        System.out.println(intersectionTwoArray(a, b));
+        
        
     }
 
