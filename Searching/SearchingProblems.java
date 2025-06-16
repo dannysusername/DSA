@@ -1,5 +1,6 @@
 package Searching;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -146,7 +147,8 @@ public class SearchingProblems {
                 set.add(arr[i]);
             }
 
-            realTotal += i + 1;  
+            realTotal += 
+            i + 1;    
 
         }
 
@@ -156,10 +158,266 @@ public class SearchingProblems {
 
     }
 
-    public static void main(String[] args) {
-        int[] arr = {3, 1, 3};
+    public static int[] missingAndRepeating2(int[] arr) {
 
-        System.out.println(Arrays.toString(missingAndRepeating(arr)));
+        int[] result = new int[2];
+
+        int repeating = -1;
+
+        for(int i = 0; i < arr.length; i++) {
+
+            int absVal = Math.abs(arr[i]);
+
+            if(arr[absVal - 1] > 0) {
+                arr[absVal - 1] = -arr[absVal - 1];
+            } else {
+                repeating = absVal;
+            }
+
+        }
+
+        int missing = -1;
+
+        for(int i = 0; i < arr.length; i++) {
+            if(arr[i] > 0) {
+                missing = i + 1;
+                break;
+            }
+        }
+
+        result[0] = missing;
+        result[1] = repeating;
+
+        return result;
+    }
+
+    public static int countOnes(int[] arr, int left, int right) {
+
+        int n = arr.length;
+
+         while (left <= right) { 
+            int mid = (left + right) / 2;
+
+            // If mid element is 0
+            if (arr[mid] == 0)
+                right = mid - 1;
+                
+            // If element is last 1
+            else if (mid == n - 1 || arr[mid + 1] != 1)
+                return mid + 1;
+                
+            // If element is not last 1    
+            else
+                left = mid + 1;
+
+        }
+        return 0;
+
+    }
+    
+    public static boolean pairWGivenDiff(int[] arr, int x) {
+    /*
+     * Given an unsorted array and an integer x, the task is find if there is a pair in array that abs difference is X 
+     * 
+     * 
+     */
+
+    Arrays.sort(arr);
+    
+    for(int i = 0; i < arr.length - 1; i++) {
+
+        int toFind = Math.abs(x + arr[i]);
+        int index = Arrays.binarySearch(arr, i + 1, arr.length, toFind);
+        if(index > 0) {
+            return true;
+        }
+        
+    }
+
+    return false;
+
+    }
+    
+    public static boolean pairWGivenDiff2(int[] arr, int x) {
+
+        Arrays.sort(arr);
+
+        int left = 0;
+        int right = 1;
+        
+        while(left < arr.length) {
+
+            int diff = Math.abs(arr[left] - arr[right]);
+
+            if(diff == x) {
+                return true;
+            }
+
+            if(diff < x) {
+                right++;
+            } else {
+                left++;
+            }
+
+        }
+       
+        return false;
+    
+    }
+    
+    public static boolean pairWGivenDiff3(int[] arr, int x) {
+
+        /*
+        * Use a hashset / add all the arr numbers into the hashset, then go through arr and find complement and check if the complement is in the array
+        */
+
+        HashSet<Integer> st = new HashSet<>();
+        
+        for (int num : arr) {
+            
+            // Check if complement exists
+            if (st.contains(num + x) || st.contains(num - x)) {
+                return true;
+            }
+            
+            st.add(num);
+        }
+
+        return false;
+
+    }
+
+    public static int[] findKLargestElements(int[] arr, int k) {
+        /*
+         * Given an array and k, find the k largest elements in the array, output of elements should be in decreasing order.
+         * Input:  [1, 23, 12, 9, 30, 2, 50], k = 3
+             Output: [50, 30, 23]
+
+            Input:  [11, 5, 12, 9, 44, 17, 2], k = 2
+            Output: [44, 17]
+
+            1. Brute force and use hashset to save output and use set.contains to skip over already saved ele O(n^2) time, O(n) space
+            2. 
+
+
+        */
+
+        HashSet<Integer> largestElements = new HashSet<Integer>();
+        int[] result = new int[k];
+
+        for(int i = 0; i < k; i++) {
+
+            int largest = arr[0];
+
+            for(int j = 0; j < arr.length; j++) {
+
+                if(largestElements.contains(arr[j])) {
+                    continue;
+
+                } else if(arr[j] > largest) {
+                    largest = arr[j];
+
+                }
+
+            }
+
+            largestElements.add(largest);
+            result[i] = largest;
+
+        }
+
+        return result;
+
+    }
+
+    public static int[] findKLargestElements2(int[] arr, int k) {
+
+        /*
+         * O(n^2) time, O(1) space
+         */
+      
+        int[] result = new int[k];
+
+        for(int i = 0; i < k; i++) {
+
+            int largest = 0;
+
+            for(int j = 0; j < arr.length; j++) {
+
+                if(arr[j] == -1) {
+                    continue;
+
+                } else if(arr[j] > arr[largest]) {
+                    largest = j;
+
+                }
+
+            }
+
+            result[i] = arr[largest];
+            arr[largest] = -1;
+
+        }
+
+        return result;
+
+    }
+
+    public static int[] findKLargestElements3(int[] arr, int k) {
+
+        /*
+         * O(nLogn) time, O(1) space
+         */
+      
+        int[] result = new int[k];
+        Arrays.sort(arr);
+        int n = arr.length;
+
+        for(int i = 0; i < k; i++) {
+
+            result[i] = arr[n - i - 1];
+
+        }
+
+        return result;
+
+    }
+
+    public static int[] findKLargestElements4(int[] arr, int k) {
+
+        /*
+         * O(n) time, O(1) space
+         */
+      
+        int[] result = new int[k];
+
+        for(int i = 0; i < arr.length; i++) {
+
+            int nextLargest = -1;
+
+            for(int j = 0; j < k; j++) {
+
+                if(arr[i] > result[j]) {
+                    nextLargest = arr[i];
+                    result[j] = arr[i];
+                    
+                }
+
+            }
+
+
+        }
+
+
+        return result;
+       
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 23, 12, 9, 30, 2, 50};
+        int k = 3;
+        System.out.println(Arrays.toString(findKLargestElements3(arr, k)));
+
     }
 
 }
