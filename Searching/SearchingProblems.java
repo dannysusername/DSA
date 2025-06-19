@@ -2,7 +2,11 @@ package Searching;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+
+import Heap.PriorityQueueMax;
+import Heap.PriorityQueueMin;
 
 public class SearchingProblems {
     
@@ -383,40 +387,150 @@ public class SearchingProblems {
 
     }
 
-    public static int[] findKLargestElements4(int[] arr, int k) {
+    public static ArrayList<Integer> findKLargestElements4(int[] arr, int k) {
 
         /*
-         * O(n) time, O(1) space
+         * Using a priority queue that implements a binary max heap in the background costs n log n to create.
          */
-      
-        int[] result = new int[k];
+        PriorityQueueMin pqMin = new PriorityQueueMin(arr.length);
 
-        for(int i = 0; i < arr.length; i++) {
-
-            int nextLargest = -1;
-
-            for(int j = 0; j < k; j++) {
-
-                if(arr[i] > result[j]) {
-                    nextLargest = arr[i];
-                    result[j] = arr[i];
-                    
-                }
-
-            }
-
+        for(int i = 0; i < k; i++) { // O(n log n)
+            pqMin.add(arr[i]);
 
         }
 
+        for(int i = k; i < arr.length; i++) {
 
-        return result;
-       
+            if(arr[i] > pqMin.peek()) {
+                pqMin.poll();
+                pqMin.add(arr[i]);
+
+            }
+
+        }
+
+        ArrayList<Integer> res = new ArrayList<>();
+
+        for(int i = 0; i < k; i++) {
+            res.add(pqMin.poll());
+
+        }
+
+        Collections.reverse(res);
+
+        return res;
+
     }
 
+
+
+    /*
+     * Given a 2D matrix (n x n) where each array is sorted find the Kth smallest element in the matrix; the range is [1, n * n]
+     * 
+     * 1.) Brute force O(n^2)
+     * 2.) Using priority queue with min binary heap
+     * 3.) Use binary search
+     * 
+     * Find the mid point and check how many values there are less than mid (through a helper method), if its less than k then make low = mid + 1, else high = mid - 1;
+     */
+
+    public static int countSmallerEqual(int[][] mat, int x) {
+        int n = mat.length;
+        int count = 0;
+        int row = 0;
+        int col = n - 1;
+
+        while(row < n && col >= 0) {
+
+            if(mat[row][col] <= x) {
+                count += (col + 1);
+                row++;
+
+            } else {
+                col--;
+
+            }
+
+        }
+
+        return count;
+
+    }
+
+    public static int findKSmallestNumber(int[][] mat, int k) {
+
+        int n = mat.length;
+        int low = mat[0][0];
+        int high = mat[n - 1][n - 1];
+        int ans = 0;
+
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+
+            int count = countSmallerEqual(mat, mid);
+
+            if(count < k) {
+                low = mid + 1;
+
+            } else {
+                ans = mid;
+                high = mid - 1;
+
+            }
+
+        }
+
+        return ans;
+
+    }
+
+    public static ArrayList<Integer> findCommonElementsInSortedArrays(int[] a, int[] b, int[] c) {
+
+        /*
+         * Given 3 sorted non decreasing arrays, print the common elements in non decreasing order across these arrays, if there are no such elements return an
+         * empty array or -1
+         * 1.) HashSet O(b + c) time and O(a) space
+         */
+
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int i = 0; i < a.length; i++) { // O(a) time and O(a) space
+            set.add(a[i]);
+
+        }
+
+        int p1 = 0;
+        int p2 = 0;
+        ArrayList<Integer> result = new ArrayList<>();
+
+        while(p1 < b.length && p2 < c.length) { // O(b + c) time
+            if(b[p1] == c[p2]) {
+                if(set.contains(b[p1])) {
+                    result.add(b[p1]);
+                    p1++;
+                    p2++;
+
+                }
+            } else if(b[p1] < c[p2]) {
+                p1++;
+            } else {
+                p2++;
+            }
+
+        }
+
+        return result;
+
+    }
+
+
+
     public static void main(String[] args) {
-        int[] arr = {1, 23, 12, 9, 30, 2, 50};
-        int k = 3;
-        System.out.println(Arrays.toString(findKLargestElements3(arr, k)));
+        int arr1[] = {2, 5, 10, 30};
+        int arr2[] = {2, 5, 10, 30}; 
+        int arr3[] = {5, 13, 19};
+       
+        System.out.println(findCommonElementsInSortedArrays(arr1, arr2, arr3));
 
     }
 
