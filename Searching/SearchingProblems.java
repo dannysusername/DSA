@@ -551,7 +551,7 @@ public class SearchingProblems {
                 
             } else {
                 left = mid + 1;
-            } //hell naw
+            } 
 
         }
 
@@ -563,11 +563,74 @@ public class SearchingProblems {
 
     }
 
+    public static int findFloor(int[] arr, int target) {
+
+        int n = arr.length;
+        int left = 0;
+        int right = n - 1;
+        int index = 0;
+
+        while(left <= right) {
+
+            int mid = left + (right - left) / 2; /*this formula is used to avoid integer overflow. Maximum integer type is 2^31 - 1 for 32bit signed integer
+                                                    this formula is safe from that */
+
+            if(arr[mid] == target) {
+                index = mid - 1;
+                break;
+
+            } else if (arr[mid] > target) {
+                right = mid - 1;
+
+            } else {
+                left = mid + 1;
+                index = mid;
+            }
+
+        }
+
+        if(index < 0) {
+            index = -1;
+        
+        }
+
+        return index;
+
+    }
+
+    public static int bitonicPoint(int[] arr) {
+
+        int n = arr.length;
+        int largest = Integer.MIN_VALUE;
+        int left = 0;
+        int right = n - 1;
+
+        while (left <= right) {
+
+            int mid = left + (right - left) / 2;
+
+            if(mid + 1 < arr.length && arr[mid + 1] > arr[mid]) {
+                left = mid + 1;
+
+            } else if(mid - 1 > 0 && arr[mid - 1] > arr[mid]) {
+                right = mid - 1;
+
+            } else {
+                largest = arr[mid];
+                return largest;
+                
+            }
+            
+        }
+
+        return largest;
+
+    }
+
     public static void main(String[] args) {
-        int arr[] = {1, 2, 8, 10, 10, 12, 19};
-        int x = 13;
+        int arr[] = {1, 2, 4, 5, 7, 8, 10};
        
-        System.out.println(ceilingSearch(arr, x));
+        System.out.println(bitonicPoint(arr));
 
     }
 
