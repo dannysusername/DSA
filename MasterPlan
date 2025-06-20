@@ -1,0 +1,37 @@
+What exactly would SpaceX need from a application software engineer?
+
+A team orieted SWE than can build reliable software systems (SWAPs) to build 
+
+Programming experience in Python, C#.NET, Go, Scala, Java, or similar object-oriented language
+1+ years of rigorous experience building single page web applications
+Experience with version control, continuous integration, and continuous delivery concepts
+Expertise in designing software systems
+Deep understanding of testing, continuous integration, build, deployment & monitoring
+Expertise in profiling and improving application performance
+Experience with build systems (Make, Bazel/Pants/Buck, Gradle) and package management tools (pip, npm)
+Experience with UNIX-like operating systems and tools like Terraform, Ansible, Puppet for managing them
+Experience working with in-stream data processing using Apache Kafka, RabbitMQ, ActiveMQ, or similar technologies
+Production experience with Docker and Kubernetes
+Front-end experience in Angular, React, or similar JavaScript framework
+Database experience with PostgreSQL, SQL Server, or similar database technologies
+
+What will I focus on?
+I will focus on learning to build single page web applications using Java. While doing this I plan to gain experience in all the technologies necessary for this role. 
+
+1. Learn Java and version control - Right now as a junior in college I am learning java data structures and algorithms. Since I need this skill for interviews, building software systems, optimization  and companies like SpaceX value these skills my #1 priority is gaining deep knowledge on Java syntax (libraries), OOP (classes, interfaces, inheritance, polymorphism, exception handling, generics, multithreading and concurrency), datastructures, algorithm patterns and using those skills to solve new problems and optimizing code by understanding what I am seeing. Optimizing code means understanding time complexities of algorithims and finding better solutions for them and using your skillset to implement a better algorithm. To solve new problems you need good understanding of data structures and algorithms so that you can see what algorithm patterns are needed to solve the problem. To solve new problems you also need to visualize the problems before coding.
+
+
+
+2. Build things - My second priority which is also very important inorder to show proof of knowledge to my employeer is learning how to build single page web applications with focus on backend development. Inorder to build single page web apps I need knowledge in frontend/backend but with a focus on backend I need to learn Spring Boot which involves REST API development, dependency injection, Spring MVC, Spring Data JPA, and security (JWT authentication) and learn API design principles like HTTP methods, status codes, and error handling.
+
+3. Databases PostgreSQL
+
+4. CD/CD and software d
+
+
+What am i doing right now? 6/19/25
+
+1. gaining deep knowledge on Java syntax (libraries), OOP (classes, interfaces, inheritance, polymorphism, exception handling, generics, multithreading and concurrency), datastructures, algorithm patterns and time complexities of algorithms.
+
+I need to learn algorithm patterns.
+

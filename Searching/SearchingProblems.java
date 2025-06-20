@@ -484,53 +484,90 @@ public class SearchingProblems {
 
     }
 
-    public static ArrayList<Integer> findCommonElementsInSortedArrays(int[] a, int[] b, int[] c) {
+    public static ArrayList<Integer> findCommonElementsInSortedArrays(int[] arr1, int[] arr2, int[] arr3) {
 
         /*
          * Given 3 sorted non decreasing arrays, print the common elements in non decreasing order across these arrays, if there are no such elements return an
          * empty array or -1
          * 1.) HashSet O(b + c) time and O(a) space
+         * 2.) 3 pointer technique O(a + b + c) and O(1) space
          */
-
-        HashSet<Integer> set = new HashSet<>();
-
-        for(int i = 0; i < a.length; i++) { // O(a) time and O(a) space
-            set.add(a[i]);
-
-        }
 
         int p1 = 0;
         int p2 = 0;
-        ArrayList<Integer> result = new ArrayList<>();
+        int p3 = 0;
 
-        while(p1 < b.length && p2 < c.length) { // O(b + c) time
-            if(b[p1] == c[p2]) {
-                if(set.contains(b[p1])) {
-                    result.add(b[p1]);
-                    p1++;
-                    p2++;
+        ArrayList<Integer> res = new ArrayList<>();
 
-                }
-            } else if(b[p1] < c[p2]) {
+        while(p1 < arr1.length && p2 < arr2.length && p3 < arr3.length) {
+            if(arr1[p1] == arr2[p2] && arr2[p2] == arr3[p3]) {
+                res.add(arr1[p1]);
                 p1++;
-            } else {
                 p2++;
+                p3++;
+
+            } else if (Math.min(Math.min(arr1[p1], arr2[p2]), arr3[p3]) == arr1[p1]) {
+                p1++;
+
+            } else if (Math.min(Math.min(arr1[p1], arr2[p2]), arr3[p3]) == arr2[p2]) {
+                p2++;
+
+            } else {
+                p3++;
+
             }
 
         }
 
-        return result;
+        return res;
 
     }
 
+    public static int ceilingSearch(int[] arr, int target) {
+        /*
+         * Given a sorted array return the smallest number than is greater than or equal to x 
+         * Use binary search to find number.
+         * 
+         * Since the array is sorted we can use linear search or binary search. Since binary search is the optimized solution 
+         * we implemented that. Since we are finding the smallest number that is GREATER than or EQUAL to the target we set 'index'
+         * to mid since it is the potential answer.
+         */
 
+        int n = arr.length;
+        int left = 0;
+        int right = n - 1;
+        int index = 0;
+
+        while(left <= right) {
+            int mid = left + (right - left)/2;
+
+            if(arr[mid] == target) {
+                index = mid + 1;
+                break;
+
+            } else if (arr[mid] > target) {
+                right = mid - 1;
+                index = mid;
+                
+            } else {
+                left = mid + 1;
+            }
+
+        }
+
+        if(index >= arr.length) {
+            index = -1;
+        } 
+
+        return index;
+
+    }
 
     public static void main(String[] args) {
-        int arr1[] = {2, 5, 10, 30};
-        int arr2[] = {2, 5, 10, 30}; 
-        int arr3[] = {5, 13, 19};
+        int arr[] = {1, 2, 8, 10, 10, 12, 19};
+        int x = 13;
        
-        System.out.println(findCommonElementsInSortedArrays(arr1, arr2, arr3));
+        System.out.println(ceilingSearch(arr, x));
 
     }
 
