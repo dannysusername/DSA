@@ -551,7 +551,7 @@ public class SearchingProblems {
                 
             } else {
                 left = mid + 1;
-            } //Sigma
+            } //no sigma
 
         }
 
