@@ -599,6 +599,16 @@ public class SearchingProblems {
     }
 
     public static int bitonicPoint(int[] arr) {
+        /*
+         * Given an array that is initially strictly increasing then strictly decreasing, your task is to find the bitonic point (maximum value). The bitonic point
+         * is the point which before it values are strictly increasing and the after it are strictly decreasing in this particular array. Basically find the point in this
+         * array where the values on the left and right are less than the middle. We can solve this in O(n) time simply by finding the largest number but we can 
+         * optimize it using binary search O(log n). We find mid at each iteration then our goal it to go to the side that is larger so if mid + 1 is larger move the left pointer,
+         * if mid - 1 is larger move the right pointer, otherwise middle is the largest element. Edge cases are dealt wealth in the condition. The first 2 conditions only 
+           check for mid + 1 or mid - 1 if there in the range.
+
+           O(log n) time and O(1) auxiliary space
+         */
 
         int n = arr.length;
         int largest = Integer.MIN_VALUE;
@@ -618,7 +628,7 @@ public class SearchingProblems {
             } else {
                 largest = arr[mid];
                 return largest;
-                
+
             }
             
         }
@@ -627,10 +637,74 @@ public class SearchingProblems {
 
     }
 
+    public static ArrayList<Integer> morethanNbyK(int[] arr, int k) {
+
+        Arrays.sort(arr); //n log n
+
+        //9, 10, 7, 9, 2, 9, 1
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        int freq = 0;
+        int n = arr.length;
+
+        for(int i = 1; i < arr.length; i++) { //O(n)
+            if(arr[i - 1] == arr[i] && freq < 2) {
+                freq = 2;
+
+            } else if (arr[i - 1] != arr[i]) {
+                freq = 1;
+
+            } else {
+                freq++;
+
+            }
+
+            if(freq == n/k + 1) {
+                res.add(arr[i]);
+                
+            }
+
+        }
+
+        return res;  
+
+    }
+
+    public static ArrayList<Integer> morethanNbyK2(int[] arr, int k) {
+
+        Arrays.sort(arr); //n log n
+
+        //9, 10, 7, 9, 2, 9, 1
+        
+        ArrayList<Integer> res = new ArrayList<>();
+        int freq = 0;
+        int prev = arr[0];
+        int n = arr.length;
+
+        for(int i = 0; i < arr.length; i++) { //O(n)
+            if(prev == arr[i]) {
+                freq++;
+
+            } else {
+                prev = arr[i];
+                freq = 1;
+
+            }
+
+            if(freq == n/k + 1) {
+                res.add(arr[i]);
+
+            }
+
+        }
+
+        return res;  
+
+    }
+
     public static void main(String[] args) {
-        int arr[] = {1, 2, 4, 5, 7, 8, 10};
-       
-        System.out.println(bitonicPoint(arr));
+        int arr[] = {9, 10, 7, 9, 2, 9, 10};
+        System.out.println(morethanNbyK2(arr, 3));
 
     }
 
