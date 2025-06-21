@@ -483,6 +483,31 @@ public class SearchingProblems {
         return ans;
 
     }
+ /*
+    public static int findKSmallestNumber2(int[] arr, int k) {
+
+       
+         * Given an array, find the kth smallest number
+         
+
+
+
+
+    }
+*/
+    public static void quickSelect(int arr[], int low, int high) {
+        //{7, 10, 4, 3, 20, 15}
+
+        if(low < high) {
+
+            //int pi = partition(arr, low, high);
+
+            quickSelect(arr, low, high);
+
+        }
+
+    }
+
 
     public static ArrayList<Integer> findCommonElementsInSortedArrays(int[] arr1, int[] arr2, int[] arr3) {
 
@@ -701,10 +726,43 @@ public class SearchingProblems {
         return res;  
 
     }
+    
+    public static int majorityElement(int[] arr) {
+        /*
+         * Use Moore's Voting Algorithm, 
+         */
 
+         int candidate = Integer.MIN_VALUE;
+         int freq = 0;
+
+         for(int i = 0; i < arr.length; i++) {
+            if(freq == 0) {
+                candidate = arr[i];
+            }
+
+            if(candidate == arr[i]) {
+                freq++;
+            } else {
+                freq--;
+            }
+
+         }
+
+         return candidate;
+
+    }
+/*
+    public static int[] findElementsK2(int[] arr, int k) {
+        
+         * Given an array and number K, find the elements that occur more than n/k times in the arr
+         * Using Moore's Voting Algorithm we can solve this effeciently.
+        
+
+    }
+ */
     public static void main(String[] args) {
-        int arr[] = {9, 10, 7, 9, 2, 9, 10};
-        System.out.println(morethanNbyK2(arr, 3));
+        int arr[] = {3, 1, 2, 3, 3};
+        System.out.println(majorityElement(arr));
 
     }
 

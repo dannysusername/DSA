@@ -1,7 +1,5 @@
 package Heap;
 
-import Arrays.Arrays;
-
 public class PriorityQueueMin {
 
     /*
