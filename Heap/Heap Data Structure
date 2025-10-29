@@ -5,7 +5,7 @@ Heaps are usually used to implement priority queues. Queues that prioritize valu
 and descending order priority queues. descending order pq's prioritize smallest values and ascending order prioritize largest values first 
 in a queue.
 
-A complete binary tree is a tree where all levels are filled except the deepest and if the deepest level is not filled the nodes are filled from left to right.
+A complete binary tree is a tree where all levels are filled except possibly the deepest and if the deepest level is not filled the nodes are filled from left to right.
 Heaps allow insertion and deletion in O(log n). 
 
 Heaps are used to create Priority Queues because of there effeciency.

@@ -1,0 +1,46 @@
+Remember that when solving algorithms you should map out all the possible memory you can access and the data inside that memory. For example in an array you can use the index's to solve your problem.
+
+Algorithms can be categorized based on their design, behavior or application. Here are the main types with brief explanations. 
+
+1. Brute Force algorithm: Try all possible solutions to find the best one. Simple but
+ineffecient. Ex. Linear Search
+
+2. Divide and Conquer Algorithms: Break a problem into smaller sub problems solve them and combine results. Ex. Merge sort and Quick sort
+
+3. Greedy Algorithms: Make locally optimcal choices at each step to find a global optimum. May not always yield the best solution. Ex. Kruskal's Algorithm for minimum spanning tree
+
+4. Dynamic programming algorithms: Solve problems by breaking them into overalpping subproblems and storing results to avoid redundant computation. Ex. Fibonacci sequence calculation, Knapsack problem.
+
+5. Backtracking Algorithms: Incrementally build solutions and abndon partial solutions that fail to satisfy constraints. Example: N-Queens problem, Sodoku solver.
+
+6. Randomized algorithms: Use randomness to make decisions, often to simplify or speed up computation. Ex. Randomized Quick Sort, Monte Carlo algorithms.
+
+7. Recursive algorithms: Solve problems by calling themselves on smaller instances of the same problem. Example: Factoral calculation, Tower of Hanoi. 
+
+8. Branch and Bound algorithms: Explore possible solutions systematically, pruning branches that cannot yield better results. Example: Traveling salesmen problem
+
+9. Heuristic algorithms: Use practical, often approximate methods to find good enough solutions for complex problems.
+
+10. Iterative algorithms: Solve problems through repeated iterations, refining results each time.
+
+
+Window sliding technique:
+
+Fixed Window:
+-Predefined window that stays constant. 
+-Involves maintaing two pointers, low and high that represent the indices of the current window.
+-Process invovles interating through the array or sequence, adjusting the window, and performing computations or operation on the elements in the window.
+
+Variable Window:
+-Window size is not fixed and can change dynamically based on conditions or criteria. 
+-Involves mainting two pointers, low and high that reperesent the indices of the current window.
+-Initialize the window indices to the first element in the sequence or array
+-Check a conditions to determine whether to expand the window. 
+-Once the window meets certain criteria, do some computations on the elements in the window.
+-Adjust window size, if window size excised desired criteria, adjust by moving start pointer. Iterate until it meets desired size.
+
+
+
+
+
+
